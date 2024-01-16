@@ -2,12 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 
-const Header = () => {
+const Header = ({ setGameStart }) => {
 	const navigate = useNavigate();
 
 	return (
 		<div className="flex justify-between items-center px-8 py-5 font-serif font-semibold text-2xl">
-			<Logo navigate={navigate} />
+			<Logo navigate={navigate} setGameStart={setGameStart} />
 			<div className="flex items-center justify-around w-[200px]">
 				<LeaderboardButton />
 				<a
@@ -22,13 +22,14 @@ const Header = () => {
 	);
 };
 
-const Logo = ({ navigate }) => {
+const Logo = ({ navigate, setGameStart }) => {
 	return (
 		<>
 			<button
 				className="flex items-center tracking-wider"
 				onClick={() => {
 					navigate("/");
+					setGameStart(false);
 				}}
 			>
 				<p>Seek</p>

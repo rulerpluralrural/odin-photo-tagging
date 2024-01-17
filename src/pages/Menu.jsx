@@ -2,13 +2,8 @@ import React, { useEffect } from "react";
 import MenuCards from "../components/MenuCards";
 import { useNavigate } from "react-router-dom";
 
-const Menu = ({ setGame, setGameStart, gameStart, game }) => {
+const Menu = ({ setGame, setGameStart, gameStart, game, games }) => {
 	const navigate = useNavigate();
-	const games = [
-		{ name: "The Bear", imgURL: "/images/The Bear.png" },
-		{ name: "The Ghost", imgURL: "/images/The Ghost.jpg" },
-		{ name: "The Open Roads", imgURL: "/images/The Open Roads.jpg" },
-	];
 
 	useEffect(() => {
 		if (gameStart) {

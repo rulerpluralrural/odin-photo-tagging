@@ -1,13 +1,22 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
+import TargetChar from "./TargetChar";
 
-const Header = ({ setGameStart }) => {
+const Header = ({ setGameStart, game, setGame, timer, setTimer }) => {
 	const navigate = useNavigate();
 
 	return (
 		<div className="flex justify-between items-center px-8 py-5 font-serif font-semibold text-2xl">
-			<Logo navigate={navigate} setGameStart={setGameStart} />
+			<Logo navigate={navigate} setGameStart={setGameStart} setGame={setGame} />
+			{game && (
+				<div className="flex items-baseline justify-center gap-5">
+					<p className="text-red-600">Find:</p>
+					{game.images?.map((item, index) => {
+						return <TargetChar key={index} url={item.url} name={item.name} />;
+					})}
+				</div>
+			)}
 			<div className="flex items-center justify-around w-[200px]">
 				<LeaderboardButton />
 				<a
@@ -22,7 +31,7 @@ const Header = ({ setGameStart }) => {
 	);
 };
 
-const Logo = ({ navigate, setGameStart }) => {
+const Logo = ({ navigate, setGameStart, setGame }) => {
 	return (
 		<>
 			<button
@@ -30,6 +39,7 @@ const Logo = ({ navigate, setGameStart }) => {
 				onClick={() => {
 					navigate("/");
 					setGameStart(false);
+					setGame("")
 				}}
 			>
 				<p>Seek</p>

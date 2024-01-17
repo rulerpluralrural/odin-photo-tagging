@@ -6,14 +6,41 @@ import Game from "./pages/Game";
 import { useState } from "react";
 
 function App() {
-	const [game, setGame] = useState({});
+	const [game, setGame] = useState("");
 	const [gameStart, setGameStart] = useState(false);
 	const [timer, setTimer] = useState(0);
+
+	const games = [
+		{
+			name: "The Bear",
+			imgURL: "/images/BearGame/The Bear.png",
+			images: [
+				{
+					name: "Bear",
+					url: "/images/BearGame/Bear.png",
+				},
+
+				{ name: "Snowman", url: "images/BearGame/Snowman.png" },
+				{
+					name: "Reindeer with santa hat",
+					url: "/images/BearGame/Reindeer with hat.png",
+				},
+			],
+		},
+		{ name: "The Ghost", imgURL: "/images/The Ghost.jpg" },
+		{ name: "The Open Roads", imgURL: "/images/The Open Roads.jpg" },
+	];
 
 	return (
 		<>
 			<div className=" bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-100 h-screen overflow-scroll flex flex-col">
-				<Header setGameStart={setGameStart} timer={timer} setTimer={setTimer} />
+				<Header
+					setGameStart={setGameStart}
+					setGame={setGame}
+					timer={timer}
+					setTimer={setTimer}
+					game={game}
+				/>
 				<div className="flex-1 py-10">
 					<Routes>
 						<Route
@@ -28,6 +55,7 @@ function App() {
 									setGameStart={setGameStart}
 									gameStart={gameStart}
 									game={game}
+									games={games}
 								/>
 							}
 						/>

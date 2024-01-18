@@ -18,12 +18,22 @@ function App() {
 				{
 					name: "Bear",
 					url: "/images/BearGame/Bear.png",
+					found: false,
+					location: "",
 				},
 
-				{ name: "Snowman", url: "images/BearGame/Snowman.png" },
 				{
-					name: "Reindeer with santa hat",
+					name: "Snowman",
+					url: "images/BearGame/Snowman.png",
+					found: false,
+					location: "",
+				},
+
+				{
+					name: "Thief",
 					url: "/images/BearGame/Reindeer with hat.png",
+					found: false,
+					location: "",
 				},
 			],
 		},

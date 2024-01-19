@@ -9,8 +9,8 @@ const Game = ({ game }) => {
 	});
 
 	return (
-		<div className="flex items-center justify-center">
-			<div className="relative">
+		<div className="flex items-center justify-center overflow-scroll">
+			<div className="relative flex-shrink-0">
 				<img
 					src={game.imgURL}
 					alt={`${game.name} image`}
@@ -20,19 +20,17 @@ const Game = ({ game }) => {
 						const rect = e.target.getBoundingClientRect();
 						const targetX = e.clientX - rect.left; //x position within the element.
 						const targetY = e.clientY - rect.top; //y position within the element.
-
-						console.log(rect);
-						console.log(e.clientX, e.clientY);
+						// console.log(rect);
+						// console.log(e.clientX, e.clientY);
 						console.log(targetX, targetY);
-
-						togglePopUp(!popUp);
+						togglePopUp(true);
 						setPopUpLocation({
 							x: targetX,
 							y: targetY,
 						});
 					}}
 				/>
-				{popUp && <PopUp game={game} popUpLocation={popUpLocation} />}
+				{popUp && <PopUp game={game} popUpLocation={popUpLocation} togglePopUp={togglePopUp}/>}
 			</div>
 		</div>
 	);

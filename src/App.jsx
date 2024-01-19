@@ -4,42 +4,12 @@ import Leaderboard from "./pages/Leaderboard";
 import Menu from "./pages/Menu";
 import Game from "./pages/Game";
 import { useState } from "react";
+import games from "./games_data.js";
 
 function App() {
 	const [game, setGame] = useState("");
 	const [gameStart, setGameStart] = useState(false);
 	const [timer, setTimer] = useState(0);
-
-	const games = [
-		{
-			name: "The Bear",
-			imgURL: "/images/BearGame/The Bear.png",
-			images: [
-				{
-					name: "Bear",
-					url: "/images/BearGame/Bear.png",
-					found: false,
-					location: "",
-				},
-
-				{
-					name: "Snowman",
-					url: "images/BearGame/Snowman.png",
-					found: false,
-					location: "",
-				},
-
-				{
-					name: "Thief",
-					url: "/images/BearGame/Reindeer with hat.png",
-					found: false,
-					location: "",
-				},
-			],
-		},
-		{ name: "The Ghost", imgURL: "/images/The Ghost.jpg" },
-		{ name: "The Open Roads", imgURL: "/images/The Open Roads.jpg" },
-	];
 
 	return (
 		<>

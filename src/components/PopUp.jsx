@@ -1,17 +1,41 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
-const PopUp = ({ game, popUpLocation }) => {
-	// console.log(popUpLocation);
+const PopUp = ({ game, popUpLocation, togglePopUp }) => {
+	const handleWrapper = (ref) => {
+		useEffect(() => {
+			// Remove popup on click outside of element
+			const handleClickOutside = (e) => {
+				if (ref.current && !ref.current.contains(e.target)) {
+					togglePopUp(false);
+				}
+			};
+			// Bind the event listener
+			document.addEventListener("mousedown", handleClickOutside);
+			return () => {
+				// Unbind the event listener on clean up
+				document.removeEventListener("mousedown", handleClickOutside);
+			};
+		}, [ref]);
+	};
+
+	const wrapperRef = useRef(null);
+	handleWrapper(wrapperRef);
 
 	return (
 		<div
 			className="absolute flex"
-			style={{ top: `${popUpLocation.y - 25}px`, left: `${popUpLocation.x -25}px` }}
+			ref={wrapperRef}
+			style={{
+				top: `${popUpLocation.y - 25}px`,
+				left: `${popUpLocation.x - 25}px`,
+			}}
 		>
 			<div className="border-[1px] border-dashed bg-slate-900 bg-opacity-90 rounded-full w-[50px] aspect-square flex flex-shrink-0 items-center justify-center self-start">
 				<p className="text-red-700 font-bold text-2xl">·</p>
 			</div>
-			<div className={`bg-slate-900 bg-opacity-90 rounded-md flex flex-col flex-shrink-0`}>
+			<div
+				className={`bg-slate-900 bg-opacity-90 rounded-md flex flex-col flex-shrink-0`}
+			>
 				{game.images.map((target, index) => {
 					return (
 						<div

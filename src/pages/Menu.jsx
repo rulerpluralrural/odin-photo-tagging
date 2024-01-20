@@ -1,15 +1,7 @@
 import React, { useEffect } from "react";
 import MenuCards from "../components/MenuCards";
-import { useNavigate } from "react-router-dom";
 
 const Menu = ({ setGame, setGameStart, gameStart, game, games }) => {
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (gameStart) {
-			navigate("/game");
-		}
-	}, [game]);
 
 	return (
 		<div className="flex flex-col items-center text-center flex-1 gap-5 px-20">
@@ -17,11 +9,12 @@ const Menu = ({ setGame, setGameStart, gameStart, game, games }) => {
 				Games
 			</h1>
 			<div className="flex items-center justify-center gap-10 w-full">
-				{games.map((game, index) => {
+				{Object.entries(games).map(([id, game], index) => {
 					return (
 						<MenuCards
 							key={index}
 							game={game}
+							id={id}
 							setGame={setGame}
 							setGameStart={setGameStart}
 						/>

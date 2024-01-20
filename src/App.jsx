@@ -17,9 +17,6 @@ function App() {
 				<Header
 					setGameStart={setGameStart}
 					setGame={setGame}
-					timer={timer}
-					setTimer={setTimer}
-					game={game}
 				/>
 				<div className="flex-1 py-10">
 					<Routes>
@@ -39,7 +36,7 @@ function App() {
 								/>
 							}
 						/>
-						<Route path="/game" element={<Game game={game} />} />
+						<Route path="/game/:gameID" element={<Game setGameStart={setGameStart} />} />
 						<Route path="/leaderboard" element={<Leaderboard />} />
 					</Routes>
 				</div>

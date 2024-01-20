@@ -1,5 +1,5 @@
-const games = [
-	{
+const games = {
+	BearGame: {
 		name: "The Bear",
 		imgURL: "/images/BearGame/The Bear.png",
 		images: [
@@ -12,7 +12,7 @@ const games = [
 
 			{
 				name: "Snowman",
-				url: "images/BearGame/Snowman.png",
+				url: "/images/BearGame/Snowman.png",
 				found: false,
 				location: { x: 644, y: 449 },
 			},
@@ -25,7 +25,7 @@ const games = [
 			},
 		],
 	},
-	{
+	GhostGame: {
 		name: "The Ghost",
 		imgURL: "/images/GhostGame/The Ghost.jpg",
 		images: [
@@ -37,7 +37,7 @@ const games = [
 			},
 		],
 	},
-	{
+	OpenRoads: {
 		name: "The Open Roads",
 		imgURL: "/images/OpenRoads/The Open Roads.jpg",
 		images: [
@@ -61,6 +61,6 @@ const games = [
 			},
 		],
 	},
-];
+};
 
 export default games;

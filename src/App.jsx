@@ -5,19 +5,17 @@ import Menu from "./pages/Menu";
 import Game from "./pages/Game";
 import { useState } from "react";
 import games from "./games_data.js";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	const [game, setGame] = useState("");
 	const [gameStart, setGameStart] = useState(false);
-	const [timer, setTimer] = useState(0);
 
 	return (
 		<>
 			<div className=" bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-100 h-screen overflow-scroll flex flex-col">
-				<Header
-					setGameStart={setGameStart}
-					setGame={setGame}
-				/>
+				<Header setGameStart={setGameStart} setGame={setGame} />
 				<div className="flex-1 py-10">
 					<Routes>
 						<Route
@@ -36,10 +34,21 @@ function App() {
 								/>
 							}
 						/>
-						<Route path="/game/:gameID" element={<Game setGameStart={setGameStart} />} />
+						<Route
+							path="/game/:gameID"
+							element={<Game setGameStart={setGameStart} />}
+						/>
 						<Route path="/leaderboard" element={<Leaderboard />} />
 					</Routes>
 				</div>
+				<ToastContainer
+						position="top-center"
+						newestOnTop={true}
+						closeOnClick={true}
+						pauseOnHover={true}
+						draggable={false}
+						theme="colored"
+					/>
 			</div>
 		</>
 	);

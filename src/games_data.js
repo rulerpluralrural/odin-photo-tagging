@@ -7,7 +7,7 @@ const games = {
 				name: "Bear",
 				url: "/images/BearGame/Bear.png",
 				found: false,
-				location: { x: 296, y: 207 },
+				location: { x: 296, y: 469 },
 			},
 
 			{

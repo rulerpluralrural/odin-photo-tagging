@@ -3,6 +3,7 @@ import PopUp from "../components/PopUp";
 import { useParams } from "react-router-dom";
 import TargetChar from "../components/TargetChar";
 import games from "../games_data";
+import Timer from "../components/Timer";
 
 const Game = ({ setGameStart }) => {
 	const { gameID } = useParams();
@@ -54,6 +55,9 @@ const Game = ({ setGameStart }) => {
 						return <TargetChar key={index} url={item.url} name={item.name} />;
 					})}
 				</div>
+			</div>
+			<div className="self-start">
+				<Timer game={game}/>
 			</div>
 		</div>
 	);

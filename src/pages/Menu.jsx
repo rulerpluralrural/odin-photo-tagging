@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import MenuCards from "../components/MenuCards";
 
-const Menu = ({ setGame, setGameStart, gameStart, game, games }) => {
+const Menu = ({ setGame, setGameStart, games }) => {
 
 	return (
 		<div className="flex flex-col items-center text-center flex-1 gap-5 px-20">
@@ -16,7 +16,6 @@ const Menu = ({ setGame, setGameStart, gameStart, game, games }) => {
 							game={game}
 							id={id}
 							setGame={setGame}
-							setGameStart={setGameStart}
 						/>
 					);
 				})}

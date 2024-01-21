@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const PopUp = ({ game, popUpLocation, togglePopUp }) => {
-	const [checkTarget, toggleCheckTarget] = useState(false);
 
 	const handleWrapper = (ref) => {
 		useEffect(() => {
@@ -25,8 +24,11 @@ const PopUp = ({ game, popUpLocation, togglePopUp }) => {
 	handleWrapper(wrapperRef);
 
 	const handleCheckTarget = (target) => {
-		
 		return () => {
+			if (target.found === true) {
+				return;
+			}
+
 			if (
 				Math.sqrt(
 					Math.pow(target.location.x - popUpLocation.x, 2) +
@@ -34,14 +36,12 @@ const PopUp = ({ game, popUpLocation, togglePopUp }) => {
 				) <= 30
 			) {
 				target.found = true;
-				toggleCheckTarget(true);
 				togglePopUp(false);
-				toast.success(`${target.name} found!`)
+				toast.success(`${target.name} found!`);
 			} else {
 				target.found = false;
-				toggleCheckTarget(false);
 				togglePopUp(false);
-				toast.error("Wrong! Try again...")
+				toast.error("Wrong! Try again...");
 			}
 		};
 	};

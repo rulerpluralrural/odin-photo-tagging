@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const Timer = ({ game }) => {
+const Timer = ({ game, gameStart }) => {
 	const [time, setTime] = useState(0);
 
 	useEffect(() => {
 		let interval = null;
         
-		if (game) {
+		if (game && gameStart === true) {
 			interval = setInterval(() => {
 				setTime((prevTime) => prevTime + 10);
 			}, 10);

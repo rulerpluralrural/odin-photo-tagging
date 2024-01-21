@@ -5,7 +5,7 @@ import TargetChar from "../components/TargetChar";
 import games from "../games_data";
 import Timer from "../components/Timer";
 
-const Game = ({ setGameStart }) => {
+const Game = ({ setGameStart, gameStart }) => {
 	const { gameID } = useParams();
 	const game = games[gameID];
 	const [popUp, togglePopUp] = useState(false);
@@ -49,12 +49,19 @@ const Game = ({ setGameStart }) => {
 				<div className="flex flex-col items-center justify-center gap-5 bg-slate-400 bg-opacity-90 text-slate-900 rounded-md p-2">
 					<p className="text-green-700 text-2xl font-bold underline">Find</p>
 					{game.images.map((item, index) => {
-						return <TargetChar key={index} url={item.url} name={item.name} found={item.found}/>;
+						return (
+							<TargetChar
+								key={index}
+								url={item.url}
+								name={item.name}
+								found={item.found}
+							/>
+						);
 					})}
 				</div>
 			</div>
 			<div className="self-start">
-				<Timer game={game}/>
+				<Timer game={game} gameStart={gameStart} />
 			</div>
 		</div>
 	);

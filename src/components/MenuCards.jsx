@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const MenuCards = ({ id, game, setGame, setGameStart }) => {
+const MenuCards = ({ id, game, setGame }) => {
 	const navigate = useNavigate();
 
 	return (

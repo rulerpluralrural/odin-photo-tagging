@@ -28,15 +28,13 @@ function App() {
 								<Menu
 									setGame={setGame}
 									setGameStart={setGameStart}
-									gameStart={gameStart}
-									game={game}
 									games={games}
 								/>
 							}
 						/>
 						<Route
 							path="/game/:gameID"
-							element={<Game setGameStart={setGameStart} />}
+							element={<Game setGameStart={setGameStart} gameStart={gameStart}/>}
 						/>
 						<Route path="/leaderboard" element={<Leaderboard />} />
 					</Routes>

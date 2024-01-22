@@ -27,7 +27,6 @@ function App() {
 							element={
 								<Menu
 									setGame={setGame}
-									setGameStart={setGameStart}
 									games={games}
 								/>
 							}

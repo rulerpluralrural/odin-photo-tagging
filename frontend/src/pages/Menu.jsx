@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import MenuCards from "../components/MenuCards";
 
-const Menu = ({ setGame, setGameStart, games }) => {
+const Menu = ({ setGame, games }) => {
 
 	return (
 		<div className="flex flex-col items-center text-center flex-1 gap-5 px-20">

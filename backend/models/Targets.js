@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const GameSchema = new Schema({
+const TargetSchema = new Schema({
 	name: {
 		type: String,
 	},
@@ -17,4 +17,4 @@ const GameSchema = new Schema({
 	},
 });
 
-export default mongoose.model("Game", GameSchema);
+export default mongoose.model("Targets", TargetSchema);

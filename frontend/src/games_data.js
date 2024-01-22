@@ -2,6 +2,7 @@ const games = {
 	BearGame: {
 		name: "The Bear",
 		imgURL: "/images/BearGame/The Bear.png",
+		scores: [{ username: "", time: 0 }],
 		images: [
 			{
 				name: "Bear",

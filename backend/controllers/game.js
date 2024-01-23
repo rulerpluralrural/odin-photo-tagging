@@ -1,15 +1,12 @@
 import Game from "../models/Game.js";
-import Target from "../models/Targets.js";
-import Score from "../models/Scores.js";
+import Targets from "../models/Targets.js";
+import Scores from "../models/Scores.js";
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
 
 export default {
 	get_games: asyncHandler(async (req, res) => {
-		const games = await Game.find()
-			.populate("scores")
-			.populate("targets")
-			.exec();
+		const games = await Game.find().populate("scores").exec();
 
 		if (!games) {
 			res.status(StatusCodes.NOT_FOUND).json({ msg: "There are no games!" });
@@ -35,15 +32,49 @@ export default {
 		res.status(StatusCodes.OK).json({ game });
 	}),
 
-	target_post: asyncHandler(async (req, res) => {
-		res.send("Post a target");
+	target_put: asyncHandler(async (req, res) => {
+		const targetID = req.params.id;
+
+		const target = new Targets({
+			name: req.body.name,
+			imgURL: req.body.imgURL,
+			found: req.body.found,
+			location: req.body.location,
+		});
+
+		await Targets.findByIdAndUpdate(targetID, target, { new: true });
+
+		if (!target) {
+			res
+				.status(StatusCodes.NOT_FOUND)
+				.json({ msg: `No target with this id: ${targetID}` });
+		}
+
+		res.status(StatusCodes.OK).json({ target });
 	}),
 
 	post_score: asyncHandler(async (req, res) => {
-		res.send("Post a score");
+		const scoreID = req.params.id;
+
+		const score = new Scores({
+			name: req.body.name,
+			time: req.body.time,
+		});
+
+		await score.save();
+
+		res.status(StatusCodes.CREATED).json({ score });
 	}),
 
 	get_scores: asyncHandler(async (req, res) => {
-		res.send("Get all scores");
+		const scores = await Scores.find()
+			.sort([["timestamps", "descending"]])
+			.exec();
+
+		if (!scores) {
+			res.status(StatusCodes.NOT_FOUND).json({ msg: "There are no scores!" });
+		}
+
+		res.status(StatusCodes.OK).json({ scores });
 	}),
 };

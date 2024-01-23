@@ -9,8 +9,8 @@ router.get("/games", gameController.get_games)
 // GET route for a single game
 router.get("/games/:id", gameController.get_game)
 
-// POST route for found target
-router.post("/game/:id", gameController.target_post)
+// PUT route for found target
+router.put("/game/:id", gameController.target_put)
 
 // POST route for score
 router.post("/game/:id/score", gameController.post_score)

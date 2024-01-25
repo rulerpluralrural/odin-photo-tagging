@@ -1,4 +1,4 @@
-import Game from "../models/Game.js";
+import Games from "../models/Games.js";
 import Targets from "../models/Targets.js";
 import Scores from "../models/Scores.js";
 import asyncHandler from "express-async-handler";
@@ -6,7 +6,7 @@ import { StatusCodes } from "http-status-codes";
 
 export default {
 	get_games: asyncHandler(async (req, res) => {
-		const games = await Game.find().populate("scores").exec();
+		const games = await Games.find().populate("scores").exec();
 
 		if (!games) {
 			res.status(StatusCodes.NOT_FOUND).json({ msg: "There are no games!" });
@@ -18,7 +18,7 @@ export default {
 	get_game: asyncHandler(async (req, res) => {
 		const gameID = req.params.id;
 
-		const game = await Game.findOne({ id: gameID })
+		const game = await Games.findOne({ id: gameID })
 			.populate("scores")
 			.populate("targets")
 			.exec();

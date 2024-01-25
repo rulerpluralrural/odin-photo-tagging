@@ -9,6 +9,10 @@ const ScoreSchema = new Schema(
 		time: {
 			type: String,
 		},
+		games: {
+			type: Schema.Types.ObjectId,
+			ref: "Games"
+		},
 	},
 	{ timestamps: true }
 );

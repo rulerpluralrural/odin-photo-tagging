@@ -15,6 +15,10 @@ const TargetSchema = new Schema({
 		x: { type: String },
 		y: { type: String },
 	},
+	games: {
+		type: Schema.Types.ObjectId,
+		ref: "Games"
+	}
 });
 
 export default mongoose.model("Targets", TargetSchema);

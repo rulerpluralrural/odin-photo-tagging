@@ -6,7 +6,10 @@ import { StatusCodes } from "http-status-codes";
 
 export default {
 	get_games: asyncHandler(async (req, res) => {
-		const games = await Games.find().populate("scores").exec();
+		const games = await Games.find()
+			.populate("scores")
+			.populate("targets")
+			.exec();
 
 		if (!games) {
 			res.status(StatusCodes.NOT_FOUND).json({ msg: "There are no games!" });

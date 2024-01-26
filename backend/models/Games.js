@@ -10,4 +10,18 @@ const GameSchema = new Schema({
 	},
 });
 
+GameSchema.virtual("scores", {
+	ref: "Scores",
+	localField: "_id",
+	foreignField: "games",
+})
+
+GameSchema.virtual("targets", {
+	ref: "Targets",
+	localField: "_id",
+	foreignField: "games",
+})
+
+GameSchema.set("toJSON", { virtuals: true });
+
 export default mongoose.model("Games", GameSchema);

@@ -59,7 +59,7 @@ const PopUp = ({ game, popUpLocation, togglePopUp }) => {
 				<p className="text-red-700 font-bold text-2xl">·</p>
 			</div>
 			<div className="bg-slate-900 bg-opacity-90 rounded-md flex flex-col flex-shrink-0 last:round-b-md">
-				{game.images.map((target, index) => {
+				{game.targets.map((target, index) => {
 					return (
 						<div
 							key={index}
@@ -69,7 +69,7 @@ const PopUp = ({ game, popUpLocation, togglePopUp }) => {
 							onClick={handleCheckTarget(target)}
 						>
 							<img
-								src={target.url}
+								src={target.imgURL}
 								alt={`${target.name} image`}
 								className="w-[50px] aspect-square rounded-[50%]"
 							/>

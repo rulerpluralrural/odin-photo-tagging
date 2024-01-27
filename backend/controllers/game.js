@@ -21,7 +21,7 @@ export default {
 	get_game: asyncHandler(async (req, res) => {
 		const gameID = req.params.id;
 
-		const game = await Games.findOne({ id: gameID })
+		const game = await Games.findOne({ _id: gameID })
 			.populate("scores")
 			.populate("targets")
 			.exec();

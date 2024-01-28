@@ -12,7 +12,9 @@ export default {
 			.exec();
 
 		if (!games) {
-			res.status(StatusCodes.NOT_FOUND).json({ msg: "There are no games!" });
+			return res
+				.status(StatusCodes.NOT_FOUND)
+				.json({ msg: "There are no games!" });
 		}
 
 		res.status(StatusCodes.OK).json({ games });
@@ -27,7 +29,7 @@ export default {
 			.exec();
 
 		if (!game) {
-			res
+			return res
 				.status(StatusCodes.NOT_FOUND)
 				.json({ msg: `There are no game with this id: ${gameID}` });
 		}
@@ -37,20 +39,31 @@ export default {
 
 	target_put: asyncHandler(async (req, res) => {
 		const targetID = req.params.id;
-
-		const target = new Targets({
-			name: req.body.name,
-			imgURL: req.body.imgURL,
-			found: req.body.found,
-			location: req.body.location,
-		});
-
-		await Targets.findByIdAndUpdate(targetID, target, { new: true });
+		let target = await Targets.findById(targetID);
 
 		if (!target) {
-			res
+			return res
 				.status(StatusCodes.NOT_FOUND)
 				.json({ msg: `No target with this id: ${targetID}` });
+		}
+
+		if (target.found === true) {
+			return;
+		}
+
+		if (
+			Math.sqrt(
+				Math.pow(target.location.x - req.body.x, 2) +
+					Math.pow(target.location.y - req.body.y, 2)
+			) <= 30
+		) {
+			target = await Targets.findByIdAndUpdate(targetID, { found: true }, { new: true });
+		} else {
+			target = await Targets.findByIdAndUpdate(
+				targetID,
+				{ found: false },
+				{ new: true }
+			);
 		}
 
 		res.status(StatusCodes.OK).json({ target });
@@ -75,7 +88,9 @@ export default {
 			.exec();
 
 		if (!scores) {
-			res.status(StatusCodes.NOT_FOUND).json({ msg: "There are no scores!" });
+			return res
+				.status(StatusCodes.NOT_FOUND)
+				.json({ msg: "There are no scores!" });
 		}
 
 		res.status(StatusCodes.OK).json({ scores });

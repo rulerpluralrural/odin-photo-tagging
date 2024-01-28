@@ -14,6 +14,7 @@ const Game = ({ setGameStart, gameStart }) => {
 		x: "",
 		y: "",
 	});
+	const [targets, setTargets] = useState(null);
 
 	useEffect(() => {
 		const getGame = async () => {
@@ -23,6 +24,7 @@ const Game = ({ setGameStart, gameStart }) => {
 					`http://localhost:5000/api/v1/games/${gameID}`
 				).then((res) => res.json());
 				setGame(response.game);
+				setTargets(response.game.targets);
 				setLoading(false);
 			} catch (error) {
 				setLoading(false);
@@ -32,9 +34,13 @@ const Game = ({ setGameStart, gameStart }) => {
 		getGame();
 		setGameStart(true);
 	}, []);
-console.log(game)
+
 	if (game === null || loading) {
-		return <MoonLoader />;
+		return (
+			<div className="flex items-center justify-center">
+				<MoonLoader color="white" size={100} />;
+			</div>
+		);
 	}
 
 	return (
@@ -58,16 +64,17 @@ console.log(game)
 				/>
 				{popUp && (
 					<PopUp
-						game={game}
+						targets={targets}
 						popUpLocation={popUpLocation}
 						togglePopUp={togglePopUp}
+						setTargets={setTargets}
 					/>
 				)}
 			</div>
 			<div className="self-start">
 				<div className="flex flex-col items-center justify-center gap-5 bg-slate-400 bg-opacity-90 text-slate-900 rounded-md p-2">
 					<p className="text-green-700 text-2xl font-bold underline">Find</p>
-					{game.targets.map((item, index) => {
+					{targets.map((item, index) => {
 						return (
 							<TargetChar
 								key={index}

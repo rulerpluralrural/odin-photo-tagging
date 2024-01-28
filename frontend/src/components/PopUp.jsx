@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
-const PopUp = ({ game, popUpLocation, togglePopUp }) => {
-
+const PopUp = ({ targets, popUpLocation, togglePopUp, setTargets }) => {
 	const handleWrapper = (ref) => {
 		useEffect(() => {
 			// Remove popup on click outside of element
@@ -23,26 +22,31 @@ const PopUp = ({ game, popUpLocation, togglePopUp }) => {
 	const wrapperRef = useRef(null);
 	handleWrapper(wrapperRef);
 
-	const handleCheckTarget = (target) => {
-		return () => {
-			if (target.found === true) {
-				return;
-			}
+	const checkTarget = (target) => {
+		return async () => {
+				const response = await fetch(`http://localhost:5000/api/v1/games/${target._id}`, {
+					method: "PUT",
+					body: JSON.stringify(popUpLocation),
+					headers: {
+						["Content-Type"]: "application/json; charset=utf-8",
+					},
+				}).then((res) => res.json());
+				togglePopUp(false);
 
-			if (
-				Math.sqrt(
-					Math.pow(target.location.x - popUpLocation.x, 2) +
-						Math.pow(target.location.y - popUpLocation.y, 2)
-				) <= 30
-			) {
-				target.found = true;
-				togglePopUp(false);
-				toast.success(`${target.name} found!`);
-			} else {
-				target.found = false;
-				togglePopUp(false);
-				toast.error("Wrong! Try again...");
-			}
+				if (response.target.found) {
+					setTargets(
+						targets.map((item) => {
+							if (item._id === target._id) {
+								return { ...item, found: true };
+							}
+							return item;
+						})
+					);
+					toast.success(`${target.name} found!`);
+				} else {
+					toast.error('Wrong! Try again...')
+				}
+				
 		};
 	};
 
@@ -59,14 +63,14 @@ const PopUp = ({ game, popUpLocation, togglePopUp }) => {
 				<p className="text-red-700 font-bold text-2xl">·</p>
 			</div>
 			<div className="bg-slate-900 bg-opacity-90 rounded-md flex flex-col flex-shrink-0 last:round-b-md">
-				{game.targets.map((target, index) => {
+				{targets.map((target, index) => {
 					return (
 						<div
 							key={index}
 							className={`flex gap-2 items-center cursor-pointer hover:bg-slate-700 focus:bg-slate-700 transition-colors px-3 py-2 first:rounded-t-md last:rounded-b-md ${
 								target.found === true && "bg-lime-700"
 							}`}
-							onClick={handleCheckTarget(target)}
+							onClick={checkTarget(target)}
 						>
 							<img
 								src={target.imgURL}

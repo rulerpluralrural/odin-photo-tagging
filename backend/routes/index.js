@@ -6,6 +6,9 @@ import gameController from "../controllers/game.js"
 // GET route for all games
 router.get("/games", gameController.get_games)
 
+// PUT route for reseting targets
+router.put("/games", gameController.put_games)
+
 // GET route for a single game
 router.get("/games/:id", gameController.get_game)
 

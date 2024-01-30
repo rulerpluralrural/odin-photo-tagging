@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import TargetChar from "../components/TargetChar";
 import Timer from "../components/Timer";
 import MoonLoader from "react-spinners/MoonLoader";
+import Modal from "../components/Modal";
 
 const Game = ({ setGameStart, gameStart }) => {
 	const { gameID } = useParams();
@@ -38,9 +39,13 @@ const Game = ({ setGameStart, gameStart }) => {
 	if (game === null || loading) {
 		return (
 			<div className="flex items-center justify-center">
-				<MoonLoader color="white" size={100} />;
+				<MoonLoader color="white" size={100} />
 			</div>
 		);
+	}
+
+	if (targets.every((target) => target.found === true)) {
+		return <Modal />;
 	}
 
 	return (

@@ -57,7 +57,11 @@ export default {
 					Math.pow(target.location.y - req.body.y, 2)
 			) <= 30
 		) {
-			target = await Targets.findByIdAndUpdate(targetID, { found: true }, { new: true });
+			target = await Targets.findByIdAndUpdate(
+				targetID,
+				{ found: true },
+				{ new: true }
+			);
 		} else {
 			target = await Targets.findByIdAndUpdate(
 				targetID,
@@ -94,5 +98,12 @@ export default {
 		}
 
 		res.status(StatusCodes.OK).json({ scores });
+	}),
+
+	targets_put: asyncHandler(async (req, res) => {
+		console.log(req.params.id)
+		await Targets.updateMany({ games: req.params.id }, { found: false });
+
+		res.status(StatusCodes.OK).json({ msg: "Update successful!" });
 	}),
 };

@@ -1,41 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-const buttonStyle =
-	"w-full bg-red-600 py-3 rounded-sm text-xl font-semibold hover:bg-red-700 focus:bg-red-700 transition-colors";
+import MoonLoader from "react-spinners/MoonLoader";
+import { toast } from "react-toastify";
 
 const Modal = ({ setGamesStart, time }) => {
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const { gameID } = useParams();
+	const [username, setUsername] = useState("");
 
-	const handleMenuButton = async () => {
+	const handleChange = (e) => {
+		setUsername(e.target.value);
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 		try {
-			await fetch(`http://localhost:5000/api/v1/games/${gameID}/reset`, {
-				method: "PUT",
-				headers: {
-					["Content-Type"]: "application/json; charset=utf-8",
-				},
-			});
-			navigate("/");
+			setLoading(true);
+			const response = await fetch(
+				`http://localhost:5000/api/v1/games/${gameID}/scores`,
+				{
+					method: "POST",
+					body: JSON.stringify({ username, time }),
+					headers: {
+						["Content-Type"]: "application/json; charset=utf-8",
+					},
+				}
+			).then((res) => res.json());
+			toast.info(response.msg);
 			setGamesStart(false);
+			navigate("/");
 		} catch (error) {
 			console.log(error);
+			setLoading(false);
 		}
 	};
 
-	const handleLeaderboardsButton = async () => {
-		try {
-			await fetch(`http://localhost:5000/api/v1/games/${gameID}/reset`, {
-				method: "PUT",
-				headers: {
-					["Content-Type"]: "application/json; charset=utf-8",
-				},
-			});
-			navigate("/leaderboards");
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	if (loading) {
+		return (
+			<div className="flex items-center justify-center">
+				<MoonLoader color="white" size={100} />
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex items-start justify-center mt-28 font-sans">
@@ -43,26 +50,29 @@ const Modal = ({ setGamesStart, time }) => {
 				<h1 className="text-4xl">You have found them all!</h1>
 				<p className="text-2xl">
 					Your time is{" "}
-					<span className="text-green-500">
+					<span className="text-red-500">
 						<span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
 						<span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
 						<span>{("0" + ((time / 10) % 1000)).slice(-2)}</span>
 					</span>
 				</p>
-				<button
-					type="button"
-					className={buttonStyle}
-					onClick={handleMenuButton}
+				<form
+					className="w-full flex flex-col gap-2 mb-5"
+					onSubmit={handleSubmit}
 				>
-					MENU
-				</button>
-				<button
-					type="button"
-					className={buttonStyle}
-					onClick={handleLeaderboardsButton}
-				>
-					LEADERBOARDS
-				</button>
+					<input
+						type="text"
+						name="username"
+						id="username"
+						placeholder="Enter your username"
+						required
+						className="w-full px-3 py-2 rounded-sm text-center text-black"
+						onChange={handleChange}
+					/>
+					<button className="bg-green-500 hover:bg-green-600 focus:bg-green-600 w-full  py-3 rounded-sm text-xl font-semibold transition-colors">
+						Submit
+					</button>
+				</form>
 			</div>
 		</div>
 	);

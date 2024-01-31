@@ -5,6 +5,7 @@ import express from "express";
 import indexRouter from "./routes/index.js";
 import connectDB from "./config/database.js";
 import cors from "cors"
+import errorHandler from "./middlewares/error-handler.js"
 
 const app = express();
 
@@ -22,6 +23,9 @@ app.get("/", (req, res) => {
 	res.redirect("/api/v1/games");
 });
 app.use("/api/v1", indexRouter);
+
+// Error Handler
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 8000;
 

@@ -16,7 +16,7 @@ router.put("/games/:id", gameController.target_put)
 router.put("/games/:id/reset", gameController.targets_put)
 
 // POST route for score
-router.post("/game/:id/score", gameController.post_score)
+router.post("/games/:id/scores", gameController.post_score)
 
 // GET route for all score
 router.get("/scores", gameController.get_scores)

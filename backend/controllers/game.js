@@ -3,6 +3,7 @@ import Targets from "../models/Targets.js";
 import Scores from "../models/Scores.js";
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
+import { check, validationResult } from "express-validator";
 
 export default {
 	get_games: asyncHandler(async (req, res) => {
@@ -73,18 +74,45 @@ export default {
 		res.status(StatusCodes.OK).json({ target });
 	}),
 
-	post_score: asyncHandler(async (req, res) => {
-		const scoreID = req.params.id;
+	post_score: [
+		check("username")
+			.trim()
+			.isLength({ min: 1 })
+			.escape()
+			.withMessage("Username is required!")
+			.custom(async (value) => {
+				const existingUsername = await Scores.findOne({ username: value });
 
-		const score = new Scores({
-			name: req.body.name,
-			time: req.body.time,
-		});
+				if (existingUsername) {
+					throw new Error({
+						msg: "Username already in use, Please enter a different one",
+					});
+				}
+			}),
+		check("time").isLength({ min: 1 }).withMessage("Time is required"),
 
-		await score.save();
+		asyncHandler(async (req, res) => {
+			const errors = validationResult(req);
 
-		res.status(StatusCodes.CREATED).json({ score });
-	}),
+			if (!errors.isEmpty()) {
+				throw new Error(errors.array());
+			}
+
+			const scoreID = req.params.id;
+
+			const score = new Scores({
+				username: req.body.username,
+				time: req.body.time,
+				games: scoreID,
+			});
+
+			await score.save();
+
+			res
+				.status(StatusCodes.CREATED)
+				.json({ msg: "Score submitted successfully!" });
+		}),
+	],
 
 	get_scores: asyncHandler(async (req, res) => {
 		const scores = await Scores.find()
@@ -101,7 +129,7 @@ export default {
 	}),
 
 	targets_put: asyncHandler(async (req, res) => {
-		console.log(req.params.id)
+		console.log(req.params.id);
 		await Targets.updateMany({ games: req.params.id }, { found: false });
 
 		res.status(StatusCodes.OK).json({ msg: "Update successful!" });

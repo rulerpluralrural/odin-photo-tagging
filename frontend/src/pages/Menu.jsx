@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MenuCards from "../components/MenuCards";
 import MoonLoader from "react-spinners/MoonLoader";
 
-const Menu = ({ setGame }) => {
+const Menu = () => {
 	const [loading, setLoading] = useState(false);
 	const [games, setGames] = useState(null);
 

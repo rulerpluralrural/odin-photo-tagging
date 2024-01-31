@@ -4,11 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 const buttonStyle =
 	"w-full bg-red-600 py-3 rounded-sm text-xl font-semibold hover:bg-red-700 focus:bg-red-700 transition-colors";
 
-const Modal = () => {
+const Modal = ({ setGamesStart, time }) => {
 	const navigate = useNavigate();
 	const { gameID } = useParams();
 
-	const handleRetry = async () => {
+	const handleMenuButton = async () => {
 		try {
 			await fetch(`http://localhost:5000/api/v1/games/${gameID}/reset`, {
 				method: "PUT",
@@ -17,12 +17,13 @@ const Modal = () => {
 				},
 			});
 			navigate("/");
+			setGamesStart(false);
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	const handleExit = async () => {
+	const handleLeaderboardsButton = async () => {
 		try {
 			await fetch(`http://localhost:5000/api/v1/games/${gameID}/reset`, {
 				method: "PUT",
@@ -30,7 +31,7 @@ const Modal = () => {
 					["Content-Type"]: "application/json; charset=utf-8",
 				},
 			});
-			navigate("/");
+			navigate("/leaderboards");
 		} catch (error) {
 			console.log(error);
 		}
@@ -41,13 +42,26 @@ const Modal = () => {
 			<div className="flex flex-col justify-center items-center gap-1">
 				<h1 className="text-4xl">You have found them all!</h1>
 				<p className="text-2xl">
-					Your time is <span className="text-green-500">00:00</span>
+					Your time is{" "}
+					<span className="text-green-500">
+						<span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
+						<span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
+						<span>{("0" + ((time / 10) % 1000)).slice(-2)}</span>
+					</span>
 				</p>
-				<button type="button" className={buttonStyle} onClick={handleRetry}>
-					RETRY
+				<button
+					type="button"
+					className={buttonStyle}
+					onClick={handleMenuButton}
+				>
+					MENU
 				</button>
-				<button type="button" className={buttonStyle} onClick={handleExit}>
-					EXIT
+				<button
+					type="button"
+					className={buttonStyle}
+					onClick={handleLeaderboardsButton}
+				>
+					LEADERBOARDS
 				</button>
 			</div>
 		</div>

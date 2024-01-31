@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-const Timer = ({ game, gameStart }) => {
-	const [time, setTime] = useState(0);
+const Timer = ({ game, gameStart, time, setTime }) => {
 
 	useEffect(() => {
 		let interval = null;

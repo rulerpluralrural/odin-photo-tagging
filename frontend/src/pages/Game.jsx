@@ -6,7 +6,7 @@ import Timer from "../components/Timer";
 import MoonLoader from "react-spinners/MoonLoader";
 import Modal from "../components/Modal";
 
-const Game = ({ setGameStart, gameStart }) => {
+const Game = ({ setGameStart, gameStart, time, setTime }) => {
 	const { gameID } = useParams();
 	const [loading, setLoading] = useState(false);
 	const [game, setGame] = useState(null);
@@ -34,6 +34,7 @@ const Game = ({ setGameStart, gameStart }) => {
 		};
 		getGame();
 		setGameStart(true);
+		setTime(0);
 	}, []);
 
 	if (game === null || loading) {
@@ -45,7 +46,7 @@ const Game = ({ setGameStart, gameStart }) => {
 	}
 
 	if (targets.every((target) => target.found === true)) {
-		return <Modal />;
+		return <Modal setGameStart={setGameStart} time={time} />;
 	}
 
 	return (
@@ -92,7 +93,12 @@ const Game = ({ setGameStart, gameStart }) => {
 				</div>
 			</div>
 			<div className="self-start">
-				<Timer game={game} gameStart={gameStart} />
+				<Timer
+					game={game}
+					gameStart={gameStart}
+					time={time}
+					setTime={setTime}
+				/>
 			</div>
 		</div>
 	);

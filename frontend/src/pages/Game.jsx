@@ -37,6 +37,17 @@ const Game = ({ setGameStart, gameStart, time, setTime }) => {
 		setTime(0);
 	}, []);
 
+	const resetGame = async () => {
+		await fetch(`http://localhost:5000/api/v1/games/${gameID}/reset`, {
+			method: "PUT",
+			headers: {
+				["Content-Type"]: "application/json; charset=utf-8",
+			},
+		});
+		setGameStart(false);
+		setTime(0);
+	};
+
 	if (game === null || loading) {
 		return (
 			<div className="flex items-center justify-center">
@@ -46,7 +57,7 @@ const Game = ({ setGameStart, gameStart, time, setTime }) => {
 	}
 
 	if (targets.every((target) => target.found === true)) {
-		return <Modal setGameStart={setGameStart} time={time} />;
+		return <Modal time={time} resetGame={resetGame}/>;
 	}
 
 	return (

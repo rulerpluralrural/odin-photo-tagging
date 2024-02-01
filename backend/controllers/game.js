@@ -4,6 +4,7 @@ import Scores from "../models/Scores.js";
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
 import { check, validationResult } from "express-validator";
+import CustomAPIError from "../errors/custom-api.js";
 
 export default {
 	get_games: asyncHandler(async (req, res) => {
@@ -84,9 +85,9 @@ export default {
 				const existingUsername = await Scores.findOne({ username: value });
 
 				if (existingUsername) {
-					throw new Error({
-						msg: "Username already in use, Please enter a different one",
-					});
+					throw new CustomAPIError(
+						"Username already in use, Please enter a different one"
+					);
 				}
 			}),
 		check("time").isLength({ min: 1 }).withMessage("Time is required"),
@@ -95,7 +96,7 @@ export default {
 			const errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
-				throw new Error(errors.array());
+				throw new CustomAPIError(errors.array());
 			}
 
 			const scoreID = req.params.id;
@@ -110,7 +111,7 @@ export default {
 
 			res
 				.status(StatusCodes.CREATED)
-				.json({ msg: "Score submitted successfully!" });
+				.json({ msg: "Score submitted successfully!", success: true });
 		}),
 	],
 
@@ -129,7 +130,6 @@ export default {
 	}),
 
 	targets_put: asyncHandler(async (req, res) => {
-		console.log(req.params.id);
 		await Targets.updateMany({ games: req.params.id }, { found: false });
 
 		res.status(StatusCodes.OK).json({ msg: "Update successful!" });

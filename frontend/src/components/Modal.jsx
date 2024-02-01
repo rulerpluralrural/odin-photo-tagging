@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import MoonLoader from "react-spinners/MoonLoader";
 import { toast } from "react-toastify";
 
-const Modal = ({ setGamesStart, time }) => {
+const Modal = ({ time, resetGame }) => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const { gameID } = useParams();
@@ -27,9 +27,20 @@ const Modal = ({ setGamesStart, time }) => {
 					},
 				}
 			).then((res) => res.json());
-			toast.info(response.msg);
-			setGamesStart(false);
-			navigate("/");
+			console.log(response);
+			if (response.success) {
+				toast.success(response.msg);
+				resetGame();
+				navigate("/");
+			} else {
+				if (response.messages) {
+					response.messages.forEach((message) => toast.error(message.msg));
+				} else {
+					toast.error(response.message);
+				}
+			}
+
+			setLoading(false);
 		} catch (error) {
 			console.log(error);
 			setLoading(false);

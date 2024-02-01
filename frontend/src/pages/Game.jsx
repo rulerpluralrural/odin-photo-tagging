@@ -19,8 +19,8 @@ const Game = ({ setGameStart, gameStart, time, setTime }) => {
 
 	useEffect(() => {
 		const getGame = async () => {
-			setLoading(true);
 			try {
+				setLoading(true);
 				const response = await fetch(
 					`http://localhost:5000/api/v1/games/${gameID}`
 				).then((res) => res.json());
@@ -57,7 +57,7 @@ const Game = ({ setGameStart, gameStart, time, setTime }) => {
 	}
 
 	if (targets.every((target) => target.found === true)) {
-		return <Modal time={time} resetGame={resetGame}/>;
+		return <Modal time={time} resetGame={resetGame} />;
 	}
 
 	return (

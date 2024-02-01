@@ -118,6 +118,7 @@ export default {
 	get_scores: asyncHandler(async (req, res) => {
 		const scores = await Scores.find()
 			.sort([["timestamps", "descending"]])
+			.populate("games")
 			.exec();
 
 		if (!scores) {

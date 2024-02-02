@@ -24,7 +24,7 @@ const PopUp = ({ targets, popUpLocation, togglePopUp, setTargets }) => {
 
 	const checkTarget = (target) => {
 		return async () => {
-				const response = await fetch(`http://localhost:5000/api/v1/games/${target._id}`, {
+				const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/games/${target._id}`, {
 					method: "PUT",
 					body: JSON.stringify(popUpLocation),
 					headers: {

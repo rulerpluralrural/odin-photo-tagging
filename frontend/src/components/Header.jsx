@@ -11,7 +11,7 @@ const Header = ({ resetGame }) => {
 			<div className="flex items-center justify-around w-[200px]">
 				<LeaderboardButton resetGame={resetGame} />
 				<a
-					href="https://github.com/rulerpluralrural/odin-photo-tagging"
+					href={`${import.meta.env.GITHUB_URL}`}
 					target="_blank"
 					className="text-2xl"
 				>

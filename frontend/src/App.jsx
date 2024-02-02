@@ -13,7 +13,7 @@ function App() {
 	const [time, setTime] = useState(0);
 
 	const resetGame = async () => {
-		await fetch(`http://localhost:5000/api/v1/reset`, {
+		await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/reset`, {
 			method: "PUT",
 			headers: {
 				["Content-Type"]: "application/json; charset=utf-8",

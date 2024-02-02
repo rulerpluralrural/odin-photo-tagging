@@ -25,7 +25,7 @@ const Leaderboard = () => {
 			try {
 				setLoading(true);
 				const response = await fetch(
-					"http://localhost:5000/api/v1/scores"
+					`${import.meta.env.VITE_SERVER_URL}/api/v1/scores`
 				).then((res) => res.json());
 
 				console.log(response);
@@ -40,7 +40,7 @@ const Leaderboard = () => {
 		getScores();
 	}, []);
 
-	console.log(scores);
+	// console.log(scores);
 
 	if (loading || scores === null) {
 		return (

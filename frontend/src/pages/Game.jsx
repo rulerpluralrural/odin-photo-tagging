@@ -22,7 +22,7 @@ const Game = ({ setGameStart, gameStart, time, setTime, resetGame }) => {
 			try {
 				setLoading(true);
 				const response = await fetch(
-					`http://localhost:5000/api/v1/games/${gameID}`
+					`${import.meta.env.VITE_SERVER_URL}/api/v1/games/${gameID}`
 				).then((res) => res.json());
 				setGame(response.game);
 				setTargets(response.game.targets);

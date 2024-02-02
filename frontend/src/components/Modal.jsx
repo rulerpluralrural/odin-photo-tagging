@@ -18,7 +18,7 @@ const Modal = ({ time, resetGame }) => {
 		try {
 			setLoading(true);
 			const response = await fetch(
-				`http://localhost:5000/api/v1/games/${gameID}/scores`,
+				`${import.meta.env.VITE_SERVER_URL}/api/v1/games/${gameID}/scores`,
 				{
 					method: "POST",
 					body: JSON.stringify({ username, time }),

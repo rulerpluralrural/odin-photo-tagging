@@ -5,7 +5,7 @@ import Header from "../components/Leaderboard/Header";
 
 const headerStyle =
 	"font-serif text-2xl font-bold text-center p-2 first-letter:text-red-600 first-letter:text-3xl";
-const divStyle = "flex flex-col items-center justify-center w-full";
+const divStyle = "flex flex-col items-center justify-center";
 
 const Leaderboard = () => {
 	const [loading, setLoading] = useState(false);
@@ -51,7 +51,7 @@ const Leaderboard = () => {
 	}
 
 	return (
-		<div className="flex flex-col lg:flex-row items-start gap-5 h-screen overflow-scroll">
+		<div className="flex flex-wrap items-start justify-around h-screen overflow-scroll">
 			<div className={divStyle}>
 				<h1 className={headerStyle}>The Bear</h1>
 				<table>

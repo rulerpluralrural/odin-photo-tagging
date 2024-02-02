@@ -61,7 +61,7 @@ const Game = ({ setGameStart, gameStart, time, setTime }) => {
 	}
 
 	return (
-		<div className="flex gap-6 items-center justify-center overflow-scroll">
+		<div className="flex flex-col-reverse lg:flex-row gap-6 items-center justify-center overflow-scroll">
 			<div className="relative flex-shrink-0">
 				<img
 					src={game.imgURL}
@@ -88,8 +88,8 @@ const Game = ({ setGameStart, gameStart, time, setTime }) => {
 					/>
 				)}
 			</div>
-			<div className="self-start">
-				<div className="flex flex-col items-center justify-center gap-5 bg-slate-400 bg-opacity-90 text-slate-900 rounded-md p-2">
+			<div className="self-center lg:self-start flex-shrink-0">
+				<div className="flex flex-row px-5 lg:px-1 lg:flex-col items-center justify-center gap-5 bg-slate-400 bg-opacity-90 text-slate-900 rounded-md p-2">
 					<p className="text-green-700 text-2xl font-bold underline">Find</p>
 					{targets.map((item, index) => {
 						return (
@@ -103,7 +103,7 @@ const Game = ({ setGameStart, gameStart, time, setTime }) => {
 					})}
 				</div>
 			</div>
-			<div className="self-start">
+			<div className="self-center lg:self-start">
 				<Timer
 					game={game}
 					gameStart={gameStart}

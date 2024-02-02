@@ -32,7 +32,7 @@ const Menu = () => {
 			{loading || games === null ? (
 				<MoonLoader color="white" size={100} />
 			) : (
-				<div className="flex items-center justify-center gap-10 w-full">
+				<div className="flex items-center flex-wrap justify-center gap-10 w-full">
 					{games.map(({ name, imgURL, id }, index) => {
 						return (
 							<MenuCards key={index} name={name} imgURL={imgURL} id={id} />

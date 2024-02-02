@@ -51,10 +51,10 @@ function App() {
 				</div>
 				<ToastContainer
 					position="top-center"
-					newestOnTop={true}
 					closeOnClick={true}
 					pauseOnHover={true}
 					draggable={false}
+					stacked={true}
 					theme="colored"
 				/>
 			</div>

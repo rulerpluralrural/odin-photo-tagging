@@ -131,7 +131,7 @@ export default {
 	}),
 
 	targets_put: asyncHandler(async (req, res) => {
-		await Targets.updateMany({ games: req.params.id }, { found: false });
+		await Targets.updateMany({ found: true }, { found: false });
 
 		res.status(StatusCodes.OK).json({ msg: "Update successful!" });
 	}),

@@ -2,14 +2,14 @@ import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 
-const Header = ({ setGameStart }) => {
+const Header = ({ resetGame }) => {
 	const navigate = useNavigate();
 
 	return (
 		<div className="flex justify-between items-center px-8 py-5 font-serif font-semibold text-2xl">
-			<Logo navigate={navigate} setGameStart={setGameStart} />
+			<Logo navigate={navigate} resetGame={resetGame} />
 			<div className="flex items-center justify-around w-[200px]">
-				<LeaderboardButton />
+				<LeaderboardButton resetGame={resetGame} />
 				<a
 					href="https://github.com/rulerpluralrural/odin-photo-tagging"
 					target="_blank"
@@ -22,14 +22,14 @@ const Header = ({ setGameStart }) => {
 	);
 };
 
-const Logo = ({ navigate, setGameStart }) => {
+const Logo = ({ navigate, resetGame }) => {
 	return (
 		<>
 			<button
 				className="flex items-center tracking-wider"
 				onClick={() => {
+					resetGame();
 					navigate("/");
-					setGameStart(false);
 				}}
 			>
 				<p>Seek</p>
@@ -39,10 +39,12 @@ const Logo = ({ navigate, setGameStart }) => {
 	);
 };
 
-const LeaderboardButton = () => {
+const LeaderboardButton = ({ resetGame }) => {
 	return (
 		<>
-			<Link to="/leaderboard">Leaderboard</Link>
+			<Link to="/leaderboard" onClick={resetGame}>
+				Leaderboard
+			</Link>
 		</>
 	);
 };

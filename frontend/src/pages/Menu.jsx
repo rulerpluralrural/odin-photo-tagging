@@ -10,7 +10,7 @@ const Menu = () => {
 		const getGames = async () => {
 			setLoading(true);
 			try {
-				const response = await fetch("http://localhost:5000/api/v1/games").then(
+				const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/games`).then(
 					(res) => res.json()
 				);
 				setGames(response.games);

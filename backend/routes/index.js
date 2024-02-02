@@ -13,7 +13,7 @@ router.get("/games/:id", gameController.get_game)
 router.put("/games/:id", gameController.target_put)
 
 // PUT route for reseting targets
-router.put("/games/:id/reset", gameController.targets_put)
+router.put("/reset", gameController.targets_put)
 
 // POST route for score
 router.post("/games/:id/scores", gameController.post_score)

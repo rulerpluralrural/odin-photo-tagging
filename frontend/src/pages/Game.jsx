@@ -6,7 +6,7 @@ import Timer from "../components/Timer";
 import MoonLoader from "react-spinners/MoonLoader";
 import Modal from "../components/Modal";
 
-const Game = ({ setGameStart, gameStart, time, setTime }) => {
+const Game = ({ setGameStart, gameStart, time, setTime, resetGame }) => {
 	const { gameID } = useParams();
 	const [loading, setLoading] = useState(false);
 	const [game, setGame] = useState(null);
@@ -36,17 +36,6 @@ const Game = ({ setGameStart, gameStart, time, setTime }) => {
 		setGameStart(true);
 		setTime(0);
 	}, []);
-
-	const resetGame = async () => {
-		await fetch(`http://localhost:5000/api/v1/games/${gameID}/reset`, {
-			method: "PUT",
-			headers: {
-				["Content-Type"]: "application/json; charset=utf-8",
-			},
-		});
-		setGameStart(false);
-		setTime(0);
-	};
 
 	if (game === null || loading) {
 		return (

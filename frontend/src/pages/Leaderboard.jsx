@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
-import Score from "../components/Score";
+import Score from "../components/Leaderboard/Score";
+import Header from "../components/Leaderboard/Header";
+
+const headerStyle =
+	"font-serif text-2xl font-bold text-center p-2 first-letter:text-red-600 first-letter:text-3xl";
+const divStyle = "flex flex-col items-center justify-center w-full";
 
 const Leaderboard = () => {
 	const [loading, setLoading] = useState(false);
@@ -8,7 +13,12 @@ const Leaderboard = () => {
 	const bearGameScores = scores?.filter((item) => {
 		return item.games.name === "The Bear";
 	});
-	console.log(bearGameScores);
+	const ghostGameScores = scores?.filter((item) => {
+		return item.games.name === "The Ghost";
+	});
+	const openRoadsGameScores = scores?.filter((item) => {
+		return item.games.name === "Open Roads";
+	});
 
 	useEffect(() => {
 		const getScores = async () => {
@@ -41,32 +51,54 @@ const Leaderboard = () => {
 	}
 
 	return (
-		<div className="flex justify-around items-center">
-			<div className="w-[350px]">
-				<h1 className="font-serif text-2xl font-bold text-center p-2 first-letter:text-red-600 first-letter:text-3xl">
-					The Bear
-				</h1>
-				<div className="w-full flex justify-between font-xl font-bold">
-					<h1 className="underline">Username</h1>
-					<h1 className="underline">Time</h1>
-					<h1 className="underline">Submitted</h1>
-				</div>
-				{bearGameScores.map((item, index) => {
-					return (
-						<Score
-							key={index}
-							username={item.username}
-							time={item.time}
-							date={item.date_formatted}
-						/>
-					);
-				})}
+		<div className="flex flex-col lg:flex-row items-start gap-5 h-screen overflow-scroll">
+			<div className={divStyle}>
+				<h1 className={headerStyle}>The Bear</h1>
+				<table>
+					<Header />
+					{bearGameScores.map((item, index) => {
+						return (
+							<Score
+								key={index}
+								username={item.username}
+								time={item.time}
+								date={item.date_formatted}
+							/>
+						);
+					})}
+				</table>
 			</div>
-			<div>
-				<h1>The Ghost</h1>
+			<div className={divStyle}>
+				<h1 className={headerStyle}>The Ghost</h1>
+				<table>
+					<Header />
+					{ghostGameScores.map((item, index) => {
+						return (
+							<Score
+								key={index}
+								username={item.username}
+								time={item.time}
+								date={item.date_formatted}
+							/>
+						);
+					})}
+				</table>
 			</div>
-			<div>
-				<h1>Open Roads</h1>
+			<div className={divStyle}>
+				<h1 className={headerStyle}>Open Roads</h1>
+				<table>
+					<Header />
+					{openRoadsGameScores.map((item, index) => {
+						return (
+							<Score
+								key={index}
+								username={item.username}
+								time={item.time}
+								date={item.date_formatted}
+							/>
+						);
+					})}
+				</table>
 			</div>
 		</div>
 	);

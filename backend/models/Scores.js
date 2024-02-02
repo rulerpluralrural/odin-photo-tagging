@@ -10,7 +10,7 @@ const ScoreSchema = new Schema(
 			required: [true, "Username is required!"],
 		},
 		time: {
-			type: String,
+			type: Number,
 			required: [true, "Time is required!"],
 		},
 		games: {
